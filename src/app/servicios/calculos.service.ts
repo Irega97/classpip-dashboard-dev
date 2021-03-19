@@ -1824,9 +1824,16 @@ public CrearJornadasLiga(NumeroDeJornadas, juegoDeCompeticionID): any  {
     return jornadaFinalizada;
   }
 
- public FormarEquiposAleatorios(individuos: any[], tamEquipos: number): any[] {
-    const listaInicial = individuos;
-    const numeroGrupos = Math.ceil(listaInicial.length / tamEquipos);
+ public FormarEquiposAleatorios(individuos: any[], tamEquipos: number, redondeo: number): any[] {
+    //Descomentar cosas
+    //Si, x ejemplo, ind=10 y tam=7, habria que añadir opcion de que no te deje hacer equipos porque ind/2 < tam
+    //En caso de hacer eso, preguntar que es el Swal y como lanzar aviso al usuario (equipos.component.ts)
+    
+    //const listaInicial = individuos; 
+    let listaInicial = [0,1,2,3,4,5,6,7,8,9,10,11];
+    const modulo = listaInicial.length % tamEquipos;
+    let numeroGrupos = Math.ceil(listaInicial.length / tamEquipos);
+
     console.log ('Tamaño ' + tamEquipos);
 
     console.log ('Numero de grupos ' + numeroGrupos);
@@ -1836,14 +1843,66 @@ public CrearJornadasLiga(NumeroDeJornadas, juegoDeCompeticionID): any  {
       const equipo: any[] = [];
       for (let j = 0; j < tamEquipos; j++) {
         const n = Math.floor(Math.random() * listaInicial.length);
-        console.log (n + ' ' + listaInicial[n]);
+        console.log (listaInicial[n]);
         equipo.push (listaInicial[n]);
         listaInicial.splice (n , 1);
       }
       equipos.push (equipo);
     }
-    equipos.push (listaInicial);
-    return equipos;
+
+    console.log("Equipos: ", equipos);
+    if(modulo == 0){
+      equipos.push (listaInicial);
+    } else {
+      let i = 0;
+      while(listaInicial.length > 0){
+        if(redondeo == 1){ //Redondeo hacia arriba
+          equipos[i].push(listaInicial[0]);
+          listaInicial.splice(0,1);
+          i++;
+        }
+        else{ //Redondeo hacia abajo
+          if(modulo <= tamEquipos/2){
+            let aux;
+            console.log("lista inicial: ", listaInicial);
+            console.log("jiji: ", equipos);
+            //let team = [];
+            let i = 0;
+            for(i; i < numeroGrupos - 1; i++){
+              aux = equipos[i];
+              console.log("aux "+i+": ", aux);
+              listaInicial.push(aux[0]);
+              aux.splice(0,1);
+              equipos.push(aux);
+              console.log("equipos ",i," ", equipos);
+            }
+            equipos.splice(0, i);
+            equipos.push(listaInicial);
+            console.log("efinal: ", equipos)
+            listaInicial=[];
+            console.log("lista final: ", listaInicial);
+
+              /* team.push(aux[0]);
+              aux.splice(0,1);
+              equipos.splice(0,1);
+              equipos.push(aux);
+              team.push(listaInicial[0]);
+              if(listaInicial.length == 1){
+                equipos.push(team);
+                listaInicial.splice(0,1);
+              } else {
+                listaInicial.splice(0,1);
+              } */
+            //}
+          } else {
+            equipos.push(listaInicial);
+          }
+        }
+      }
+    }
+
+    console.log("return: ", equipos);
+    return /*equipos */;
   }
 
   // Elimina el cuestionario (tanto el id del profe como del cuestinario estan en sesión.
