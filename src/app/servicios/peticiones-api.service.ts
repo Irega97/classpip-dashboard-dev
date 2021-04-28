@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { ResponseContentType, Http} from '@angular/http';
 
 
-import { Profesor, Grupo, Alumno, Matricula, Juego, Punto, Nivel, AlumnoJuegoDePuntos,
+import { User, Profesor, Grupo, Alumno, Matricula, Juego, Punto, Nivel, AlumnoJuegoDePuntos,
         Equipo, AsignacionEquipo, AsignacionPuntosJuego, EquipoJuegoDePuntos, Coleccion,
         AlumnoJuegoDeColeccion, EquipoJuegoDeColeccion, Cromo, HistorialPuntosAlumno, HistorialPuntosEquipo,
         Album, AlbumEquipo, Insignia, AlumnoJuegoDeCompeticionLiga, EquipoJuegoDeCompeticionLiga,
@@ -36,6 +36,8 @@ export class PeticionesAPIService {
   // private host = 'http://localhost';
   private host = URL.host;
 
+
+  private APIUrlAutentificacion = this.host + ':3000/api/Users'
 
   private APIUrlProfesores = this.host + ':3000/api/Profesores';
   private APIUrlAlumnos = this.host + ':3000/api/Alumnos';
@@ -132,6 +134,7 @@ export class PeticionesAPIService {
 
   /* Las funciones estar agrupadas en los bloques siquientes:
 
+    AUTENTIFICACIÓN DE USUARIOS
     GESTION DE PROFESORES Y ALUNNOS
     GESTIÓN DE GRUPOS
     GESTION DE EQUIIPOS
@@ -162,6 +165,34 @@ export class PeticionesAPIService {
     GESTION DE JUEGOS DE AVATARES
     GESTION DE ALUMNOS EN JUEGOS DE AVATARES
   */
+
+/////////////////////  AUTENTIFICACIÓN DE USUARIOS ///////////////////////////////
+
+public login(body: User): Observable<any> {
+  return this.http.post(this.APIUrlAutentificacion + '/login', body);
+}
+
+public logout(): Observable<any> {
+  //No necesita body porque hace el logout con el access token
+  return this.http.post(this.APIUrlAutentificacion + '/logout', null);
+}
+
+public register(body: User): Observable<any> {
+  return this.http.post(this.APIUrlAutentificacion, body);
+}
+
+public changeNameOrEmail(body: any, id: number): Observable<any> {
+  //En el body pasamos id y nuevo username y/o email
+  return this.http.post(this.APIUrlAutentificacion + '/update?[where][id]='+id, body);
+}
+
+public changePassword(old: String, newPass: String): Observable<any> {
+  return this.http.post(this.APIUrlAutentificacion + '/change-password', {"oldPassword": old, "newPassword": newPass});
+}
+
+public resetPassword(newPass: String): Observable<any> {
+  return this.http.post(this.APIUrlAutentificacion + '/reset-password', {"newPassword": newPass});
+}
 
 /////////////////////  GESTION DE PROFESORES Y ALUNNOS ///////////////////////////////
 

@@ -9,8 +9,9 @@ export class Alumno {
   PermisoCambioImagenPerfil: boolean;
   profesorId: number;
   id: number;
+  userId: number;
 
-  constructor(nombre?: string, primerApellido?: string, segundoApellido?: string,
+  constructor(userId: number, nombre?: string, primerApellido?: string, segundoApellido?: string,
               Username?: string, Password?: string, Email?: string, profesorId?: number,
               imagenPerfil?: string) {
 
@@ -23,5 +24,7 @@ export class Alumno {
     this.Password = Password;
     this.Email = Email;
     this.profesorId = profesorId;
+    this.userId = userId;
+    this.ImagenPerfil = imagenPerfil;
   }
 }

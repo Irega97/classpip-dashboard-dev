@@ -88,6 +88,7 @@ export class LoginComponent implements OnInit {
           // Pero si quitamos el id hay que cambiar las rutas en app-routing
           // De momento lo dejamos asi.
           console.log ('vamos inicio');
+          console.log('RES->', res);
           this.route.navigate (['/inicio/' + this.profesor.id]);
         } else {
           // Aqui habría que mostrar alguna alerta al usuario
