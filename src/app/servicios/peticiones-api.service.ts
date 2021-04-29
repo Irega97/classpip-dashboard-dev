@@ -196,8 +196,8 @@ public resetPassword(newPass: String): Observable<any> {
 
 /////////////////////  GESTION DE PROFESORES Y ALUNNOS ///////////////////////////////
 
-  public DameProfesor(nombre: string, pass: string): Observable<Profesor> {
-    return this.http.get<Profesor>(this.APIUrlProfesores + '?filter[where][NombreUsuario]=' + nombre + '&filter[where][Password]=' + pass);
+  public DameProfesor(userId: number): Observable<Profesor> {
+    return this.http.get<Profesor>(this.APIUrlProfesores + '?filter[where][userId]=' + userId);
   }
 
   public BuscaNombreUsuario(username: string): Observable<Profesor> {

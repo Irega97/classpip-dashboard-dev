@@ -4,7 +4,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpModule } from '@angular/http';
 
 // IMPORTs CONSULTA BASE DE DATOS
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // IMPORTs DE ANGULAR MATERIAL
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -247,6 +247,7 @@ import { TeamExcludePipe } from './pipes/team-exclude.pipe';
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 import { JuegoDeCuestionarioKahootSeleccionadoActivoComponent } from './paginas/juego-seleccionado-activo/juego-de-cuestionario-kahoot-seleccionado-activo/juego-de-cuestionario-kahoot-seleccionado-activo.component';
 import { GestionPreguntaKahootComponent } from './paginas/juego-seleccionado-activo/juego-de-cuestionario-kahoot-seleccionado-activo/gestion-pregunta-kahoot/gestion-pregunta-kahoot.component';
+import { AuthInterceptor } from './interceptor/auth.interceptor';
 
 
 @NgModule({
@@ -454,7 +455,8 @@ import { GestionPreguntaKahootComponent } from './paginas/juego-seleccionado-act
   providers: [
     {
         provide: DateAdapter, useClass: CustomDateAdapter
-    }
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ]
 
 

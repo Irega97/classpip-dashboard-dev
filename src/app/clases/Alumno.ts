@@ -11,9 +11,9 @@ export class Alumno {
   id: number;
   userId: number;
 
-  constructor(userId: number, nombre?: string, primerApellido?: string, segundoApellido?: string,
+  constructor(nombre?: string, primerApellido?: string, segundoApellido?: string,
               Username?: string, Password?: string, Email?: string, profesorId?: number,
-              imagenPerfil?: string) {
+              imagenPerfil?: string, userId?: number) {
 
     this.Nombre = nombre;
     this.PrimerApellido = primerApellido;
