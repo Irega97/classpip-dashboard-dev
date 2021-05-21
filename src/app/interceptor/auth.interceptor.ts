@@ -15,10 +15,12 @@ export class AuthInterceptor implements HttpInterceptor {
         }
 
         //SUSTITUIR ESTO POR EL SET ACCESS TOKEN EN LOOPBACK
-        const headers = req.clone({
+        let newReq = req.clone({
             headers: req.headers.set('Authorization', token)
         });
 
-        return next.handle(headers);
+        newReq.headers.append('Content-type','application/json');
+
+        return next.handle(newReq);
     }
 }

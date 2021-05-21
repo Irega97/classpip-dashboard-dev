@@ -173,7 +173,7 @@ public login(body: User): Observable<any> {
 }
 
 public logout(): Observable<any> {
-  //No necesita body porque hace el logout con el access token
+  //No necesita body porque hace el logout con el access token que añade el interceptor
   return this.http.post(this.APIUrlAutentificacion + '/logout', null);
 }
 
@@ -181,18 +181,19 @@ public register(body: User): Observable<any> {
   return this.http.post(this.APIUrlAutentificacion, body);
 }
 
-public changeNameOrEmail(body: any, id: number): Observable<any> {
-  //En el body pasamos id y nuevo username y/o email
-  return this.http.post(this.APIUrlAutentificacion + '/update?[where][id]='+id, body);
+public getUser(id: number): Observable<any> {
+  return this.http.get<User>(this.APIUrlAutentificacion + '/' + id);
 }
 
-public changePassword(old: String, newPass: String): Observable<any> {
-  return this.http.post(this.APIUrlAutentificacion + '/change-password', {"oldPassword": old, "newPassword": newPass});
-}
+//Faltan peticiones cambiar/forget contraseña
+// public changeNameOrEmail(body: any, id: number): Observable<any> {
+//   //En el body pasamos id y nuevo username y/o email
+//   return this.http.post(this.APIUrlAutentificacion + '/update?[where][id]='+id, body);
+// }
 
-public resetPassword(newPass: String): Observable<any> {
-  return this.http.post(this.APIUrlAutentificacion + '/reset-password', {"newPassword": newPass});
-}
+// public changePassword(old: String, newPass: String): Observable<any> {
+//   return this.http.post(this.APIUrlAutentificacion + '/change-password', {"oldPassword": old, "newPassword": newPass});
+// }
 
 /////////////////////  GESTION DE PROFESORES Y ALUNNOS ///////////////////////////////
 
